@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "997195f7-e598-4f20-847f-6a49d463f562": {
+      "ProjectGuid": "997195f7-e598-4f20-847f-6a49d463f562",
+      "DisplayName": "ColorPicker",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
