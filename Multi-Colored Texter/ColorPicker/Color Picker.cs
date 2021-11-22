@@ -172,7 +172,7 @@ namespace WindowsFormsApplication2
             selector.BackColor = Color.Transparent;
         }
 
-        int i = 1;
+        int i = 0;
         string clr2;
         float calcLuminance(int rgb)
         {
