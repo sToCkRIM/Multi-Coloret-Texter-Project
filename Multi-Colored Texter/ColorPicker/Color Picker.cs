@@ -409,6 +409,7 @@ namespace WindowsFormsApplication2
         }
         private void button1_Click(object sender, EventArgs e)
         {
+
             den();
             if (!r1 && r2)
             {
