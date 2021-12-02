@@ -6,24 +6,43 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 using System.Xml;
 using System.Xml.Linq;
+using System.IO;
 
 namespace WindowsFormsApplication2
 {
     public partial class Form1 : Form
     {
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+
+        private static extern IntPtr CreateRoundRectRgn
+            (
+              int nLeftRect,
+              int nTopRect,
+              int nRightRect,
+              int nBottomRect,
+              int nWidthEllipse,
+              int nHeightEllipse);
+            
         public Form1()
         {
             InitializeComponent();
+            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));
         }
         bool formTasiniyor = false;
+        bool denet = false;
+        bool coder = false;
+        int ranger = 0;
+        bool r1 = false;
+        bool r2 = false;
         Point baslangicNoktasi = new Point(0, 0);
         string ur1, ug1, ub1, ur2, ug2, ub2, text, tbh1, tbh2, fdelete, red1 = null, red2 = null, green1 = null, green2 = null, blue1 = null, blue2 = null;
         char[] kelime;
         Color myColor;
         string hex;
-        int r, g, b, dr1, dr2, dg1, dg2, db1, db2, x = 1, d;
+        int r, g, b, dr1, dr2, dg1, dg2, db1, db2, x = 0, d;
 
         private void button8_Click(object sender, EventArgs e)
         {
@@ -53,61 +72,114 @@ namespace WindowsFormsApplication2
             }
         }
 
+        private void colorwheel_Click(object sender, EventArgs e)
+        {
+            if (r1 && r2)
+            {
+                cder.Text = "";
+                r1 = false;
+                r2 = false;
+            }
+        }
+
         private void button7_Click(object sender, EventArgs e)
         {
-            string cumle;
-            string[] s;
-            cumle = cder.Text;
-            s = cumle.Split(' ', ',', '.', '-', '<', '>', ';');
-
-            fdelete = s[1];
-
-            XDocument xDoc = XDocument.Load(@"SavedColorCodes.xml");
-            XElement rootElement = xDoc.Root;
-
-            foreach (XElement rehberimiz in rootElement.Elements())
+            if (cder.Text.Length == 0)
+            { }
+            else
             {
-                if (rehberimiz.Attribute("ID").Value == fdelete)
+                string cumle;
+                string[] s;
+                cumle = cder.Text;
+                s = cumle.Split(' ', ',', '.', '-', '<', '>', ';');
+
+                fdelete = s[1];
+
+                XDocument xDoc = XDocument.Load(@"SavedColorCodes.xml");
+                XElement rootElement = xDoc.Root;
+
+                foreach (XElement rehberimiz in rootElement.Elements())
                 {
-                    rehberimiz.Remove();
+                    if (rehberimiz.Attribute("ID").Value == fdelete)
+                    {
+                        rehberimiz.Remove();
+                    }
                 }
+                xDoc.Save(@"SavedColorCodes.xml");
+                cder.Text = "";
+                load();
             }
-            xDoc.Save(@"SavedColorCodes.xml");
-            cder.Text = "";
-            load();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            xmlctrl();
             load();
         }
+        private void xmlctrl()
+        {
+            string dosya_dizini = AppDomain.CurrentDomain.BaseDirectory.ToString() + "SavedColorCodes.xml";
+            if (File.Exists(dosya_dizini) == true) // dizindeki dosya var mı ?
+            {
+            }
+            else
+            {
+                // verdiğimiz xml dosya yolunda xml dosya oluşturuluyor.
+                FileStream fs = new FileStream(dosya_dizini, FileMode.OpenOrCreate);
 
+                // temel bir xml dosyası hazırlıyoruz.
+                string YazilacakIcerik = "<?xml version=\"1.0\" encoding=\"utf-8\" ?> "
+                    + Environment.NewLine + "<clrs> "
+                    + Environment.NewLine + "</clrs>";
+                fs.Flush();
+                fs.Close();
+
+                // oluşturulan xml dosyasının okunabilmesi için gerekli olan şeyleri içerisine yazdık.
+                File.AppendAllText(dosya_dizini, YazilacakIcerik);
+            }
+        }
         private void button5_Click(object sender, EventArgs e)
         {
-            string cumle;
-            string[] s;
-            cumle = cder.Text;
-            s = cumle.Split(' ', ',', '.', '-');
+            r1 = true;
+            if (cder.Text.Length == 0)
+            {
 
-            tbR.Text = s[4];
-            tbG.Text = s[5];
-            tbB.Text = s[6];
-            button1.PerformClick();
-            button3.PerformClick();
+            }
+            else
+            {
+                string cumle;
+                string[] s;
+                cumle = cder.Text;
+                s = cumle.Split(' ', ',', '.', '-');
+
+                tbR.Text = s[4];
+                tbG.Text = s[5];
+                tbB.Text = s[6];
+                button1.PerformClick();
+                button3.PerformClick();
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            string cumle;
-            string[] s;
-            cumle = cder.Text;
-            s = cumle.Split(' ', ',', '.', '-');
+            r2 = true;
+            if (cder.Text.Length == 0)
+            {
 
-            tbR.Text = s[7];
-            tbG.Text = s[8];
-            tbB.Text = s[9];
-            button1.PerformClick();
-            button3.PerformClick();
+            }
+            else
+            {
+                string cumle;
+                string[] s;
+                cumle = cder.Text;
+                s = cumle.Split(' ', ',', '.', '-');
+
+                tbR.Text = s[7];
+                tbG.Text = s[8];
+                tbB.Text = s[9];
+                button1.PerformClick();
+                button3.PerformClick();
+            }
         }
 
         private void load()
@@ -123,23 +195,30 @@ namespace WindowsFormsApplication2
         }
             private void saver_Click(object sender, EventArgs e)
             {
-            if (cder.Text == null)
+                if (cder.Text.Length == 0)
             {
 
             }
             else
             {
-                XDocument xDoc = XDocument.Load(@"SavedColorCodes.xml");
-                XElement rootElement = xDoc.Root;
-                XElement newElement = new XElement("COLORS");
-                int cint = cder.Items.Count + 1;
-                XAttribute idAttribute = new XAttribute("ID", cint);
-                XElement adiElement = new XElement("RGB", "ID: " + cint + "   " + cder.Text + " <----> ");
-                XElement telefonElement = new XElement("Hex", tbh1 + " - " + tbh2);
-                newElement.Add(idAttribute, adiElement, telefonElement);
-                rootElement.Add(newElement);
-                xDoc.Save(@"SavedColorCodes.xml");
-                load();
+                if (cder.Text == null)
+                {
+
+                }
+                else
+                {
+                    XDocument xDoc = XDocument.Load(@"SavedColorCodes.xml");
+                    XElement rootElement = xDoc.Root;
+                    XElement newElement = new XElement("COLORS");
+                    int cint = cder.Items.Count + 1;
+                    XAttribute idAttribute = new XAttribute("ID", cint);
+                    XElement adiElement = new XElement("RGB", "ID: " + cint + "   " + cder.Text + " <----> ");
+                    XElement telefonElement = new XElement("Hex", tbh1 + " - " + tbh2);
+                    newElement.Add(idAttribute, adiElement, telefonElement);
+                    rootElement.Add(newElement);
+                    xDoc.Save(@"SavedColorCodes.xml");
+                    load();
+                }
             }
             }
 
@@ -157,18 +236,35 @@ namespace WindowsFormsApplication2
 
         private void coppy_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Clipboard.SetText(outp.Text);
+            if (inp.Text == "Your Text Is Here")
+            {
+
+            }
+            else
+            {
+                System.Windows.Forms.Clipboard.SetText(outp.Text);
+            }
         }
 
         private void refre_Click(object sender, EventArgs e)
         {
+            coder = false;
+            ranger = 0;
+            dr1 = 0;
+            dr2 = 0;
+            dg1 = 0;
+            dg2 = 0;
+            db1 = 0;
+            db2 = 0;
+            x = 1;
+            i = 0;
             tbHex.Text = "";
             tbR.Text = "";
             tbG.Text = "";
             tbB.Text = "";
             cder.Text = "";
-            inp.Text = "Your Text Are Here";
-            outp.Text = "Output Are Here";
+            inp.Text = "Your Text Is Here";
+            outp.Text = "Output Text Is Here";
             selector.BackColor = Color.Transparent;
         }
 
@@ -278,38 +374,218 @@ namespace WindowsFormsApplication2
                 }
             }
         }
-
+        private void den()
+        {
+            if (r1 && r2)
+            {
+                switch (x)
+                {
+                    case 0:
+                        red1 = tbR.Text;
+                        green1 = tbG.Text;
+                        blue1 = tbB.Text;
+                        clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text + "-";
+                        tbh1 = tbHex.Text;
+                        x++;
+                        break;
+                    case 1:
+                        red2 = tbR.Text;
+                        green2 = tbG.Text;
+                        blue2 = tbB.Text;
+                        clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text;
+                        tbh2 = tbHex.Text;
+                        x++;
+                        break;
+                    case 3:
+                        cder.Text = "";
+                        x = 1;
+                        goto case 0;
+                }
+            }
+               else if (cder.Text.Length != 0)
+                {
+                    denet = true;
+                }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
-            switch (x)
+            den();
+            if (!r1 && r2)
             {
-                case 1:
-                    red1 = tbR.Text;
-                    green1 = tbG.Text;
-                    blue1 = tbB.Text;
-                    clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text + "-";
-                    cder.Text = cder.Text + clr2;
-                    tbh1 = tbHex.Text;
+                if (!coder && ranger == 0 && cder.Text.Length == 0)
+                {
+                    range();
+                    coder = true;
+                }
+                else if (!coder && ranger == 0 && cder.Text.Length != 0)
+                {
+                    range();
+                    ranger++;
+                }
+                else if (!coder && ranger != 0)
+                {
+                    rang();
+                    ranger++;
+                }
+                else if (coder)
+                {
                     x++;
-                    break;
-                case 2:
-                    red2 = tbR.Text;
-                    green2 = tbG.Text;
-                    blue2 = tbB.Text;
-                    clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text;
-                    cder.Text = cder.Text + clr2;
-                    tbh2 = tbHex.Text;
+                    rang();
+                }
+            }
+            else if (!r1 && !r2)
+            {
+                if (!coder && ranger == 0 && cder.Text.Length == 0)
+                {
+                    range();
+                    coder = true;
+                }
+                else if (!coder && ranger == 0 && cder.Text.Length != 0)
+                {
+                    range();
+                    ranger++;
+                }
+                else if (!coder && ranger != 0)
+                {
+                    rang();
+                    ranger++;
+                }
+                else if (coder)
+                {
                     x++;
-                    break;
-                case 3:
-                    cder.Text = "";
-                    x = 1;
-                    goto case 1;
+                    rang();
+                }
+            }
+        }
+        private void range()
+        {
+            if ((tbR.Text.Length != 0 && tbG.Text.Length != 0 && tbB.Text.Length != 0) || tbHex.Text.Length != 0)
+            {
+                if (!denet)
+                {
+                    switch (x)
+                    {
+                        case 0:
+                            red1 = tbR.Text;
+                            green1 = tbG.Text;
+                            blue1 = tbB.Text;
+                            clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text + "-";
+                            cder.Text = cder.Text + clr2;
+                            tbh1 = tbHex.Text;
+                            x++;
+                            break;
+                        case 1:
+                            red2 = tbR.Text;
+                            green2 = tbG.Text;
+                            blue2 = tbB.Text;
+                            clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text;
+                            cder.Text = cder.Text + clr2;
+                            tbh2 = tbHex.Text;
+                            x++;
+                            break;
+                        case 2:
+                            cder.Text = "";
+                            x = 1;
+                            goto case 0;
+                    }
+                }
+                else if (denet)
+                {
+                    switch (x)
+                    {
+                        case 1:
+                            red1 = tbR.Text;
+                            green1 = tbG.Text;
+                            blue1 = tbB.Text;
+                            clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text + "-";
+                            tbh1 = tbHex.Text;
+                            x++;
+                            break;
+                        case 2:
+                            red2 = tbR.Text;
+                            green2 = tbG.Text;
+                            blue2 = tbB.Text;
+                            clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text;
+                            tbh2 = tbHex.Text;
+                            cder.Text = cder.Text + clr2;
+                            x++;
+                            break;
+                        case 3:
+                            cder.Text = "";
+                            x = 1;
+                            goto case 1;
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+        private void rang()
+        {
+            if ((tbR.Text.Length != 0 && tbG.Text.Length != 0 && tbB.Text.Length != 0) || tbHex.Text.Length != 0)
+            {
+                if (!denet)
+                {
+                    switch (x)
+                    {
+                        case 1:
+                            red1 = tbR.Text;
+                            green1 = tbG.Text;
+                            blue1 = tbB.Text;
+                            clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text + "-";
+                            cder.Text = cder.Text + clr2;
+                            tbh1 = tbHex.Text;
+                            break;
+                        case 2:
+                            red2 = tbR.Text;
+                            green2 = tbG.Text;
+                            blue2 = tbB.Text;
+                            clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text;
+                            cder.Text = cder.Text + clr2;
+                            tbh2 = tbHex.Text;
+                            break;
+                        case 3:
+                            cder.Text = "";
+                            x = 1;
+                            goto case 1;
+                    }
+                }
+                else if (denet)
+                {
+                    switch (x)
+                    {
+                        case 0:
+                            red1 = tbR.Text;
+                            green1 = tbG.Text;
+                            blue1 = tbB.Text;
+                            clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text + "-";
+                            cder.Text = cder.Text + clr2; //!
+                            tbh1 = tbHex.Text;
+                            break;
+                        case 2:
+                            red2 = tbR.Text;
+                            green2 = tbG.Text;
+                            blue2 = tbB.Text;
+                            clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text;
+                            cder.Text = cder.Text + clr2;
+                            tbh2 = tbHex.Text;
+                            break;
+                        case 3:
+                            cder.Text = "";
+                            x = 1;
+                            goto case 0;
+                    }
+                }
+            }
+            else
+            {
+
             }
         }
         private void hesap()
         {
-            this.ResetText();
             string[] texts = inp.Text.Split();
             kelime = inp.Text.ToCharArray();
 
@@ -337,127 +613,127 @@ namespace WindowsFormsApplication2
                     g = dg2 - dg1;
                     b = db2 - db1;
                 }
-                if (dr1 < dr2 && dg1 < dg2 && db1 > db2)
+                else if (dr1 < dr2 && dg1 < dg2 && db1 > db2)
                 {
                     r = dr2 - dr1;
                     g = dg2 - dg1;
                     b = db1 - db2;
                 }
-                if (dr1 < dr2 && dg1 == dg2 && db1 > db2)
+                else if (dr1 < dr2 && dg1 == dg2 && db1 > db2)
                 {
                     r = dr2 - dr1;
                     g = dg2 - dg1;
                     b = db1 - db2;
                 }
-                if (dr1 < dr2 && dg1 > dg2 && db1 < db2)
+                else if (dr1 < dr2 && dg1 > dg2 && db1 < db2)
                 {
                     r = dr2 - dr1;
                     g = dg1 - dg2;
                     b = db2 - db1;
                 }
-                if (dr1 > dr2 && dg1 < dg2 && db1 < db2)
+                else if (dr1 > dr2 && dg1 < dg2 && db1 < db2)
                 {
                     r = dr1 - dr2;
                     g = dg2 - dg1;
                     b = db2 - db1;
                 }
-                if (dr1 < dr2 && dg1 > dg2 && db1 > db2)
+                else if (dr1 < dr2 && dg1 > dg2 && db1 > db2)
                 {
                     r = dr2 - dr1;
-                    g = dg1 - dg2;
-                    b = db1 - db2;
-                }
-                if (dr1 > dr2 && dg1 > dg2 && db1 < db2)
-                {
-                    r = dr1 - dr2;
-                    g = dg1 - dg2;
-                    b = db2 - db1;
-                }
-                if (dr1 > dr2 && dg1 < dg2 && db1 > db2)
-                {
-                    r = dr1 - dr2;
-                    g = dg2 - dg1;
-                    b = db1 - db2;
-                }
-                if (dr1 == dr2 && dg1 == dg2 && db1 == db2)
-                {
-                    r = dr2 - dr1;
-                    g = dg2 - dg1;
-                    b = db2 - db1;
-                }
-                if (dr1 < dr2 && dg1 < dg2 && db1 == db2)
-                {
-                    r = dr2 - dr1;
-                    g = dg2 - dg1;
-                    b = db2 - db1;
-                }
-                if (dr1 < dr2 && dg1 == dg2 && db1 < db2)
-                {
-                    r = dr2 - dr1;
-                    g = dg2 - dg1;
-                    b = db2 - db1;
-                }
-                if (dr1 == dr2 && dg1 < dg2 && db1 < db2)
-                {
-                    r = dr2 - dr1;
-                    g = dg2 - dg1;
-                    b = db2 - db1;
-                }
-                if (dr1 < dr2 && dg1 == dg2 && db1 == db2)
-                {
-                    r = dr2 - dr1;
-                    g = dg2 - dg1;
-                    b = db2 - db1;
-                }
-                if (dr1 == dr2 && dg1 == dg2 && db1 < db2)
-                {
-                    r = dr2 - dr1;
-                    g = dg2 - dg1;
-                    b = db2 - db1;
-                }
-                if (dr1 == dr2 && dg1 < dg2 && db1 == db2)
-                {
-                    r = dr2 - dr1;
-                    g = dg2 - dg1;
-                    b = db2 - db1;
-                }
-                if (dr1 > dr2 && dg1 > dg2 && db1 > db2)
-                {
-                    r = dr1 - dr2;
                     g = dg1 - dg2;
                     b = db1 - db2;
                 }
-                if (dr1 < dr2 && dg1 > dg2 && db1 == db2)
+                else if (dr1 > dr2 && dg1 > dg2 && db1 < db2)
                 {
-                    r = dr2 - dr1;
+                    r = dr1 - dr2;
                     g = dg1 - dg2;
                     b = db2 - db1;
                 }
-                if (dr1 > dr2 && dg1 < dg2 && db1 == db2)
+                else if (dr1 > dr2 && dg1 < dg2 && db1 > db2)
                 {
                     r = dr1 - dr2;
                     g = dg2 - dg1;
-                    b = db2 - db1;
+                    b = db1 - db2;
                 }
-                if (dr1 > dr2 && dg1 == dg2 && db1 < db2)
+                else if (dr1 == dr2 && dg1 == dg2 && db1 == db2)
                 {
-                    r = dr1 - dr2;
-                    g = dg1 - dg2;
+                    r = dr2 - dr1;
+                    g = dg2 - dg1;
                     b = db2 - db1;
                 }
-                if (dr1 > dr2 && dg1 == dg2 && db1 == db2)
+                else if (dr1 < dr2 && dg1 < dg2 && db1 == db2)
+                {
+                    r = dr2 - dr1;
+                    g = dg2 - dg1;
+                    b = db2 - db1;
+                }
+                else if (dr1 < dr2 && dg1 == dg2 && db1 < db2)
+                {
+                    r = dr2 - dr1;
+                    g = dg2 - dg1;
+                    b = db2 - db1;
+                }
+                else if (dr1 == dr2 && dg1 < dg2 && db1 < db2)
+                {
+                    r = dr2 - dr1;
+                    g = dg2 - dg1;
+                    b = db2 - db1;
+                }
+                else if (dr1 < dr2 && dg1 == dg2 && db1 == db2)
+                {
+                    r = dr2 - dr1;
+                    g = dg2 - dg1;
+                    b = db2 - db1;
+                }
+                else if (dr1 == dr2 && dg1 == dg2 && db1 < db2)
+                {
+                    r = dr2 - dr1;
+                    g = dg2 - dg1;
+                    b = db2 - db1;
+                }
+                else if (dr1 == dr2 && dg1 < dg2 && db1 == db2)
+                {
+                    r = dr2 - dr1;
+                    g = dg2 - dg1;
+                    b = db2 - db1;
+                }
+                else if (dr1 > dr2 && dg1 > dg2 && db1 > db2)
                 {
                     r = dr1 - dr2;
                     g = dg1 - dg2;
                     b = db1 - db2;
                 }
-                if (dr1 == dr2 && dg1 > dg2 && db1 == db2)
+                else if (dr1 < dr2 && dg1 > dg2 && db1 == db2)
+                {
+                    r = dr2 - dr1;
+                    g = dg1 - dg2;
+                    b = db2 - db1;
+                }
+                else if (dr1 > dr2 && dg1 < dg2 && db1 == db2)
+                {
+                    r = dr1 - dr2;
+                    g = dg2 - dg1;
+                    b = db2 - db1;
+                }
+                else if (dr1 > dr2 && dg1 == dg2 && db1 < db2)
+                {
+                    r = dr1 - dr2;
+                    g = dg1 - dg2;
+                    b = db2 - db1;
+                }
+                else if (dr1 > dr2 && dg1 == dg2 && db1 == db2)
                 {
                     r = dr1 - dr2;
                     g = dg1 - dg2;
                     b = db1 - db2;
                 }
-                if (dr1 == dr2 && dg1 == dg2 && db1 > db2)
+                else if (dr1 == dr2 && dg1 > dg2 && db1 == db2)
+                {
+                    r = dr1 - dr2;
+                    g = dg1 - dg2;
+                    b = db1 - db2;
+                }
+                else if (dr1 == dr2 && dg1 == dg2 && db1 > db2)
                 {
                     r = dr1 - dr2;
                     g = dg1 - dg2;
@@ -475,43 +751,43 @@ namespace WindowsFormsApplication2
             var dr = Convert.ToInt32(hr / d);
             var dg = Convert.ToInt32(hg / d);
             var db = Convert.ToInt32(hb / d);
-        tag:
-            if (i < inp.Text.Length)
+        if (dr1 == 0 && dg1 == 0 && db1 == 0 && dr2 == 0 && dg2 == 0 && db2 == 0)
             {
-                if (dr1 <= 255 && dr2 <= 255 && dg1 <= 255 && dg2 <= 255 && db1 <= 255 && db2 <= 255)
+
+            }
+            else
+            {
+                if (cder.Text == null || cder.Text == "" || cder.Text == " ")
                 {
-                    text = kelime[i].ToString();
-                    if (text == " ")
+                    outp.Text = "Output Text Is Here";
+                }
+                else
+                {
+                tag:
+                if (i < inp.Text.Length)
+                {
+                    if (dr1 <= 255 && dr2 <= 255 && dg1 <= 255 && dg2 <= 255 && db1 <= 255 && db2 <= 255)
                     {
-                        outp.Text = outp.Text + kelime[i];
-                        i++;
-                        goto tag;
-                    }
-                    else
-                    {
-                        if (dr1 < dr2 && dg1 < dg2 && db1 < db2)
+                        text = kelime[i].ToString();
+                        if (text == " ")
                         {
-                            dr1 += dr;
-                            dg1 += dg;
-                            db1 += db;
-                            myColor = Color.FromArgb(dr1, dg1, db1);
-                            hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                            outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                            outp.Text = outp.Text + kelime[i];
                             i++;
+                            goto tag;
                         }
-                        if (dr1 < dr2 && dg1 < dg2 && db1 > db2)
+                        else
                         {
-                            dr1 += dr;
-                            dg1 += dg;
-                            db1 -= db;
-                            myColor = Color.FromArgb(dr1, dg1, db1);
-                            hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                            outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                            i++;
-                        }
-                        if (dr1 < dr2 && dg1 == dg2 && db1 > db2)
-                        {
-                            if (dg1 < 255)
+                            if (dr1 < dr2 && dg1 < dg2 && db1 < db2)
+                            {
+                                dr1 += dr;
+                                dg1 += dg;
+                                db1 += db;
+                                myColor = Color.FromArgb(dr1, dg1, db1);
+                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                i++;
+                            }
+                            else if (dr1 < dr2 && dg1 < dg2 && db1 > db2)
                             {
                                 dr1 += dr;
                                 dg1 += dg;
@@ -521,155 +797,125 @@ namespace WindowsFormsApplication2
                                 outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
                                 i++;
                             }
-                            if (dg1 == 255)
+                            else if (dr1 < dr2 && dg1 == dg2 && db1 > db2)
                             {
-                                dr1 += dr;
-                                dg1 -= dg;
-                                db1 -= db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
+                                if (dg1 < 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 += dg;
+                                    db1 -= db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                                if (dg1 == 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 -= dg;
+                                    db1 -= db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
                             }
-                        }
-                        if (dr1 > dr2 && dg1 == dg2 && db1 == db2)
-                        {
-                            dr1 -= dr;
-                            dg1 = dg;
-                            db1 = db;
-                            myColor = Color.FromArgb(dr1, dg1, db1);
-                            hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                            outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                            i++;
-                        }
-                        if (dr1 > dr2 && dg1 == dg2 && db1 < db2)
-                        {
-                            if (dg1 < 255)
+                            else if (dr1 > dr2 && dg1 == dg2 && db1 == db2)
                             {
                                 dr1 -= dr;
-                                dg1 += dg;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                            if (dg1 == 255)
-                            {
-                                dr1 -= dr;
-                                dg1 -= dg;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                        }
-                        if (dr1 < dr2 && dg1 > dg2 && db1 < db2)
-                        {
-                            dr1 += dr;
-                            dg1 -= dg;
-                            db1 += db;
-                            myColor = Color.FromArgb(dr1, dg1, db1);
-                            hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                            outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                            i++;
-                        }
-                        if (dr1 == dr2 && dg1 > dg2 && db1 == db2)
-                        {
-                            dr1 = dr;
-                            dg1 -= dg;
-                            db1 = db;
-                            myColor = Color.FromArgb(dr1, dg1, db1);
-                            hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                            outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                            i++;
-                        }
-                        if (dr1 == dr2 && dg1 == dg2 && db1 > db2)
-                        {
-                            dr1 = dr;
-                            dg1 = dg;
-                            db1 -= db;
-                            myColor = Color.FromArgb(dr1, dg1, db1);
-                            hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                            outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                            i++;
-                        }
-                        if (dr1 > dr2 && dg1 < dg2 && db1 < db2)
-                        {
-                            dr1 -= dr;
-                            dg1 += dg;
-                            db1 += db;
-                            myColor = Color.FromArgb(dr1, dg1, db1);
-                            hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                            outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                            i++;
-                        }
-                        if (dr1 < dr2 && dg1 > dg2 && db1 > db2)
-                        {
-                            dr1 += dr;
-                            dg1 -= dg;
-                            db1 -= db;
-                            myColor = Color.FromArgb(dr1, dg1, db1);
-                            hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                            outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                            i++;
-                        }
-                        if (dr1 > dr2 && dg1 > dg2 && db1 < db2)
-                        {
-                            dr1 -= dr;
-                            dg1 -= dg;
-                            db1 += db;
-                            myColor = Color.FromArgb(dr1, dg1, db1);
-                            hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                            outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                            i++;
-                        }
-                        if (dr1 > dr2 && dg1 < dg2 && db1 > db2)
-                        {
-                            dr1 -= dr;
-                            dg1 += dg;
-                            db1 -= db;
-                            myColor = Color.FromArgb(dr1, dg1, db1);
-                            hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                            outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                            i++;
-                        }
-                        if (dr1 == dr2 && dg1 == dg2 && db1 == db2)
-                        {
-                            if (dr1 < 255 && dr2 < 255 && dg1 < 255 && dg2 < 255 && db1 < 255 && db2 < 255)
-                            {
-                                dr1 += dr;
-                                dg1 += dg;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                            if (dr1 == 255 && dg1 == 255 && db1 == 255)
-                            {
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                        }
-                        if (dr1 < dr2 && dg1 < dg2 && db1 == db2)
-                        {
-                            if (db1 < 255 && db2 < 255)
-                            {
-                                dr1 += dr;
-                                dg1 += dg;
+                                dg1 = dg;
                                 db1 = db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
                                 outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
                                 i++;
                             }
-                            if (db1 == 255)
+                            else if (dr1 > dr2 && dg1 == dg2 && db1 < db2)
+                            {
+                                if (dg1 < 255)
+                                {
+                                    dr1 -= dr;
+                                    dg1 += dg;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                                if (dg1 == 255)
+                                {
+                                    dr1 -= dr;
+                                    dg1 -= dg;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                            }
+                            else if (dr1 < dr2 && dg1 > dg2 && db1 < db2)
                             {
                                 dr1 += dr;
+                                dg1 -= dg;
+                                db1 += db;
+                                myColor = Color.FromArgb(dr1, dg1, db1);
+                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                i++;
+                            }
+                            else if (dr1 == dr2 && dg1 > dg2 && db1 == db2)
+                            {
+                                dr1 = dr;
+                                dg1 -= dg;
+                                db1 = db;
+                                myColor = Color.FromArgb(dr1, dg1, db1);
+                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                i++;
+                            }
+                            else if (dr1 == dr2 && dg1 == dg2 && db1 > db2)
+                            {
+                                dr1 = dr;
+                                dg1 = dg;
+                                db1 -= db;
+                                myColor = Color.FromArgb(dr1, dg1, db1);
+                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                i++;
+                            }
+                            else if (dr1 > dr2 && dg1 < dg2 && db1 < db2)
+                            {
+                                dr1 -= dr;
+                                dg1 += dg;
+                                db1 += db;
+                                myColor = Color.FromArgb(dr1, dg1, db1);
+                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                i++;
+                            }
+                            else if (dr1 < dr2 && dg1 > dg2 && db1 > db2)
+                            {
+                                dr1 += dr;
+                                dg1 -= dg;
+                                db1 -= db;
+                                myColor = Color.FromArgb(dr1, dg1, db1);
+                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                i++;
+                            }
+                            else if (dr1 > dr2 && dg1 > dg2 && db1 < db2)
+                            {
+                                dr1 -= dr;
+                                dg1 -= dg;
+                                db1 += db;
+                                myColor = Color.FromArgb(dr1, dg1, db1);
+                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                i++;
+                            }
+                            else if (dr1 > dr2 && dg1 < dg2 && db1 > db2)
+                            {
+                                dr1 -= dr;
                                 dg1 += dg;
                                 db1 -= db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
@@ -677,186 +923,267 @@ namespace WindowsFormsApplication2
                                 outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
                                 i++;
                             }
+                            else if (dr1 == dr2 && dg1 == dg2 && db1 == db2)
+                            {
+                                if (dr1 < 255 && dr2 < 255 && dg1 < 255 && dg2 < 255 && db1 < 255 && db2 < 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 += dg;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                                if (dr1 == 255 && dg1 == 255 && db1 == 255)
+                                {
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                            }
+                            else if (dr1 < dr2 && dg1 < dg2 && db1 == db2)
+                            {
+                                if (db1 < 255 && db2 < 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 += dg;
+                                    db1 = db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                                if (db1 == 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 += dg;
+                                    db1 -= db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                            }
+                            else if (dr1 < dr2 && dg1 == dg2 && db1 < db2)
+                            {
+                                if (dg1 < 255 && dg2 < 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 += dg;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                                if (dg1 == 255)
+                                {
+                                    dr1 += dr;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                            }
+                            else if (dr1 == dr2 && dg1 < dg2 && db1 < db2)
+                            {
+                                if (dr1 < 255 && dr2 < 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 += dg;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                                if (dr1 == 255)
+                                {
+                                    dg1 += dg;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                            }
+                            else if (dr1 < dr2 && dg1 == dg2 && db1 == db2)
+                            {
+                                if (dg1 < 255 && dg2 < 255 && db1 < 255 && db2 < 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 += dg;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                                if (dg1 == 255 && db1 == 255)
+                                {
+                                    dr1 += dr;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                            }
+                            else if (dr1 == dr2 && dg1 == dg2 && db1 < db2)
+                            {
+                                if (dr1 < 255 && dr2 < 255 && dg1 < 255 && dg2 < 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 += dg;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                                if (dr1 == 255 && dg1 == 255)
+                                {
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                            }
+                            else if (dr1 == dr2 && dg1 < dg2 && db1 == db2)
+                            {
+                                if (dr1 < 255 && dr2 < 255 && db1 < 255 && db2 < 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 += dg;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                                if (dr1 == 255 && db1 == 255)
+                                {
+                                    dg1 += dg;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                            }
+                            else if (dr1 > dr2 && dg1 > dg2 && db1 > db2)
+                            {
+                                dr2 += dr;
+                                dg2 += dg;
+                                db2 += db;
+                                myColor = Color.FromArgb(dr2, dg2, db2);
+                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                i++;
+                            }
+                            else if (dr1 < dr2 && dg1 > dg2 && db1 == db2)
+                            {
+                                if (db1 < 255 && db2 < 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 -= dg;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                                if (db1 == 255)
+                                {
+                                    dr1 += dr;
+                                    dg1 -= dg;
+                                    myColor = Color.FromArgb(dr1, dg2, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                            }
+                            else if (dr1 > dr2 && dg1 < dg2 && db1 == db2)
+                            {
+                                if (db1 < 255 && db2 < 255)
+                                {
+                                    dr1 -= dr;
+                                    dg1 += dg;
+                                    db1 += db;
+                                    myColor = Color.FromArgb(dr1, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                                if (db1 == 255)
+                                {
+                                    dr1 -= dr;
+                                    dg1 += dg;
+                                    myColor = Color.FromArgb(dr2, dg1, db1);
+                                    hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
+                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
+                                    i++;
+                                }
+                            }
                         }
-                        if (dr1 < dr2 && dg1 == dg2 && db1 < db2)
-                        {
-                            if (dg1 < 255 && dg2 < 255)
-                            {
-                                dr1 += dr;
-                                dg1 += dg;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                            if (dg1 == 255)
-                            {
-                                dr1 += dr;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                        }
-                        if (dr1 == dr2 && dg1 < dg2 && db1 < db2)
-                        {
-                            if (dr1 < 255 && dr2 < 255)
-                            {
-                                dr1 += dr;
-                                dg1 += dg;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                            if (dr1 == 255)
-                            {
-                                dg1 += dg;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                        }
-                        if (dr1 < dr2 && dg1 == dg2 && db1 == db2)
-                        {
-                            if (dg1 < 255 && dg2 < 255 && db1 < 255 && db2 < 255)
-                            {
-                                dr1 += dr;
-                                dg1 += dg;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                            if (dg1 == 255 && db1 == 255)
-                            {
-                                dr1 += dr;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                        }
-                        if (dr1 == dr2 && dg1 == dg2 && db1 < db2)
-                        {
-                            if (dr1 < 255 && dr2 < 255 && dg1 < 255 && dg2 < 255)
-                            {
-                                dr1 += dr;
-                                dg1 += dg;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                            if (dr1 == 255 && dg1 == 255)
-                            {
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                        }
-                        if (dr1 == dr2 && dg1 < dg2 && db1 == db2)
-                        {
-                            if (dr1 < 255 && dr2 < 255 && db1 < 255 && db2 < 255)
-                            {
-                                dr1 += dr;
-                                dg1 += dg;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                            if (dr1 == 255 && db1 == 255)
-                            {
-                                dg1 += dg;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                        }
-                        if (dr1 > dr2 && dg1 > dg2 && db1 > db2)
-                        {
-                            dr2 += dr;
-                            dg2 += dg;
-                            db2 += db;
-                            myColor = Color.FromArgb(dr2, dg2, db2);
-                            hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                            outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                            i++;
-                        }
-                        if (dr1 < dr2 && dg1 > dg2 && db1 == db2)
-                        {
-                            if (db1 < 255 && db2 < 255)
-                            {
-                                dr1 += dr;
-                                dg1 -= dg;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                            if (db1 == 255)
-                            {
-                                dr1 += dr;
-                                dg1 -= dg;
-                                myColor = Color.FromArgb(dr1, dg2, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                        }
-                        if (dr1 > dr2 && dg1 < dg2 && db1 == db2)
-                        {
-                            if (db1 < 255 && db2 < 255)
-                            {
-                                dr1 -= dr;
-                                dg1 += dg;
-                                db1 += db;
-                                myColor = Color.FromArgb(dr1, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                            if (db1 == 255)
-                            {
-                                dr1 -= dr;
-                                dg1 += dg;
-                                myColor = Color.FromArgb(dr2, dg1, db1);
-                                hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i] + "[/COLOR]"}");
-                                i++;
-                            }
-                        }
+                        goto tag;
                     }
-                    goto tag;
+                } 
                 }
             }
         }
+
+        private void per1()
+        {
+            button5.PerformClick();
+        }
+        private void per2()
+        {
+            button6.PerformClick();
+        }
         private void coded_Click(object sender, EventArgs e)
         {
-            if (red1 == null || green1 == null || blue1 == null || red2 == null || green2 == null || blue2 == null)
+            if (cder.Text == null || cder.Text == "" || cder.Text == " ")
             {
-                button5.PerformClick();
-                button6.PerformClick();
-                outp.Text = "";
-                hesap();
+
             }
             else
             {
-                outp.Text = "";
-                hesap();
+                if (red1 == null || green1 == null || blue1 == null || red2 == null || green2 == null || blue2 == null)
+                {
+                    if (cder.Text.Length != 0)
+                    {
+                        per1();
+                        System.Threading.Thread.Sleep(1000);
+                        per2();
+                        outp.Text = "";
+                        hesap();
+                    }
+                    else
+                    {
+                        per1();
+                        System.Threading.Thread.Sleep(1000);
+                        per2();
+                        outp.Text = "";
+                        hesap();
+                    }
+                }
+                else
+                {
+                    if (cder.Text.Length != 0)
+                    {
+                        
+                        outp.Text = "";
+                        hesap();
+                    }
+                    else
+                    {
+                        outp.Text = "";
+                        hesap();
+                    }
+                }
             }
         }
     }

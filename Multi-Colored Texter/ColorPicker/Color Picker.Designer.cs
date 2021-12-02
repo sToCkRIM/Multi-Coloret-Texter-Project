@@ -53,12 +53,10 @@
             this.colorbox = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
             this.cder = new System.Windows.Forms.ComboBox();
-            this.loadder = new System.Windows.Forms.Button();
             this.saver = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.colorwheel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selector)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorbox)).BeginInit();
@@ -72,11 +70,12 @@
             this.colorwheel.Size = new System.Drawing.Size(160, 164);
             this.colorwheel.TabIndex = 0;
             this.colorwheel.TabStop = false;
+            this.colorwheel.Click += new System.EventHandler(this.colorwheel_Click);
             this.colorwheel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
             // selector
             // 
-            this.selector.Location = new System.Drawing.Point(224, 94);
+            this.selector.Location = new System.Drawing.Point(220, 12);
             this.selector.Name = "selector";
             this.selector.Size = new System.Drawing.Size(125, 164);
             this.selector.TabIndex = 2;
@@ -85,7 +84,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(364, 108);
+            this.label1.Location = new System.Drawing.Point(361, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 13);
             this.label1.TabIndex = 4;
@@ -94,7 +93,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(364, 146);
+            this.label2.Location = new System.Drawing.Point(367, 45);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(18, 13);
             this.label2.TabIndex = 5;
@@ -103,7 +102,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(364, 175);
+            this.label3.Location = new System.Drawing.Point(368, 73);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(18, 13);
             this.label3.TabIndex = 6;
@@ -112,7 +111,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(365, 206);
+            this.label4.Location = new System.Drawing.Point(368, 99);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(17, 13);
             this.label4.TabIndex = 7;
@@ -129,7 +128,7 @@
             // lbR
             // 
             this.lbR.AutoSize = true;
-            this.lbR.Location = new System.Drawing.Point(491, 66);
+            this.lbR.Location = new System.Drawing.Point(487, -16);
             this.lbR.Name = "lbR";
             this.lbR.Size = new System.Drawing.Size(0, 13);
             this.lbR.TabIndex = 9;
@@ -137,7 +136,7 @@
             // lbG
             // 
             this.lbG.AutoSize = true;
-            this.lbG.Location = new System.Drawing.Point(491, 79);
+            this.lbG.Location = new System.Drawing.Point(487, -3);
             this.lbG.Name = "lbG";
             this.lbG.Size = new System.Drawing.Size(0, 13);
             this.lbG.TabIndex = 10;
@@ -145,21 +144,21 @@
             // lbB
             // 
             this.lbB.AutoSize = true;
-            this.lbB.Location = new System.Drawing.Point(491, 92);
+            this.lbB.Location = new System.Drawing.Point(487, 10);
             this.lbB.Name = "lbB";
             this.lbB.Size = new System.Drawing.Size(0, 13);
             this.lbB.TabIndex = 11;
             // 
             // tbHex
             // 
-            this.tbHex.Location = new System.Drawing.Point(391, 105);
+            this.tbHex.Location = new System.Drawing.Point(391, 12);
             this.tbHex.Name = "tbHex";
             this.tbHex.Size = new System.Drawing.Size(100, 20);
             this.tbHex.TabIndex = 12;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(233, 264);
+            this.button1.Location = new System.Drawing.Point(229, 182);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(96, 23);
             this.button1.TabIndex = 13;
@@ -169,7 +168,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(352, 235);
+            this.button4.Location = new System.Drawing.Point(348, 124);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 52);
             this.button4.TabIndex = 17;
@@ -179,28 +178,28 @@
             // 
             // tbR
             // 
-            this.tbR.Location = new System.Drawing.Point(388, 139);
+            this.tbR.Location = new System.Drawing.Point(391, 42);
             this.tbR.Name = "tbR";
             this.tbR.Size = new System.Drawing.Size(36, 20);
             this.tbR.TabIndex = 18;
             // 
             // tbB
             // 
-            this.tbB.Location = new System.Drawing.Point(388, 203);
+            this.tbB.Location = new System.Drawing.Point(391, 96);
             this.tbB.Name = "tbB";
             this.tbB.Size = new System.Drawing.Size(36, 20);
             this.tbB.TabIndex = 19;
             // 
             // tbG
             // 
-            this.tbG.Location = new System.Drawing.Point(388, 172);
+            this.tbG.Location = new System.Drawing.Point(391, 70);
             this.tbG.Name = "tbG";
             this.tbG.Size = new System.Drawing.Size(36, 20);
             this.tbG.TabIndex = 20;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(433, 235);
+            this.button3.Location = new System.Drawing.Point(429, 124);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 52);
             this.button3.TabIndex = 21;
@@ -215,7 +214,7 @@
             this.inp.Name = "inp";
             this.inp.Size = new System.Drawing.Size(259, 83);
             this.inp.TabIndex = 22;
-            this.inp.Text = "Your Text Are Here";
+            this.inp.Text = "Your Text Is Here";
             // 
             // coded
             // 
@@ -223,7 +222,7 @@
             this.coded.Name = "coded";
             this.coded.Size = new System.Drawing.Size(85, 23);
             this.coded.TabIndex = 23;
-            this.coded.Text = "Make Coded";
+            this.coded.Text = "Make Codded";
             this.coded.UseVisualStyleBackColor = true;
             this.coded.Click += new System.EventHandler(this.coded_Click);
             // 
@@ -249,13 +248,13 @@
             // 
             // outp
             // 
-            this.outp.Enabled = false;
             this.outp.Location = new System.Drawing.Point(529, 194);
             this.outp.Multiline = true;
             this.outp.Name = "outp";
+            this.outp.ReadOnly = true;
             this.outp.Size = new System.Drawing.Size(259, 99);
             this.outp.TabIndex = 26;
-            this.outp.Text = "Output Are Here";
+            this.outp.Text = "Output Text Is Here";
             // 
             // colorbox
             // 
@@ -282,24 +281,14 @@
             // cder
             // 
             this.cder.FormattingEnabled = true;
-            this.cder.Location = new System.Drawing.Point(506, 12);
+            this.cder.Location = new System.Drawing.Point(515, 11);
             this.cder.Name = "cder";
-            this.cder.Size = new System.Drawing.Size(297, 21);
+            this.cder.Size = new System.Drawing.Size(288, 21);
             this.cder.TabIndex = 28;
-            // 
-            // loadder
-            // 
-            this.loadder.Location = new System.Drawing.Point(513, 39);
-            this.loadder.Name = "loadder";
-            this.loadder.Size = new System.Drawing.Size(49, 25);
-            this.loadder.TabIndex = 29;
-            this.loadder.Text = "Load";
-            this.loadder.UseVisualStyleBackColor = true;
-            this.loadder.Click += new System.EventHandler(this.loadder_Click);
             // 
             // saver
             // 
-            this.saver.Location = new System.Drawing.Point(749, 37);
+            this.saver.Location = new System.Drawing.Point(734, 41);
             this.saver.Name = "saver";
             this.saver.Size = new System.Drawing.Size(54, 25);
             this.saver.TabIndex = 30;
@@ -309,7 +298,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(568, 37);
+            this.button5.Location = new System.Drawing.Point(529, 36);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(56, 34);
             this.button5.TabIndex = 31;
@@ -319,7 +308,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(630, 37);
+            this.button6.Location = new System.Drawing.Point(591, 36);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(56, 34);
             this.button6.TabIndex = 32;
@@ -329,7 +318,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(692, 37);
+            this.button7.Location = new System.Drawing.Point(674, 41);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(54, 25);
             this.button7.TabIndex = 33;
@@ -337,28 +326,16 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(224, 10);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(261, 69);
-            this.button8.TabIndex = 34;
-            this.button8.Text = "Reload";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(835, 299);
-            this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.saver);
-            this.Controls.Add(this.loadder);
             this.Controls.Add(this.cder);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.outp);
@@ -427,12 +404,10 @@
         private System.Windows.Forms.PictureBox colorbox;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ComboBox cder;
-        private System.Windows.Forms.Button loadder;
         private System.Windows.Forms.Button saver;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
     }
 }
 
