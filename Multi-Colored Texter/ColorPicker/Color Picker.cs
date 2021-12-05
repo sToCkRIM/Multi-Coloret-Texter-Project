@@ -778,7 +778,7 @@ namespace WindowsFormsApplication2
                                 db1 += db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                 i++;
                             }
                             else if (dr1 < dr2 && dg1 < dg2 && db1 > db2)
@@ -788,7 +788,7 @@ namespace WindowsFormsApplication2
                                 db1 -= db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                 i++;
                             }
                             else if (dr1 < dr2 && dg1 == dg2 && db1 > db2)
@@ -800,7 +800,7 @@ namespace WindowsFormsApplication2
                                     db1 -= db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                                 if (dg1 == 255)
@@ -810,7 +810,7 @@ namespace WindowsFormsApplication2
                                     db1 -= db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                             }
@@ -821,7 +821,7 @@ namespace WindowsFormsApplication2
                                 db1 = db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                 i++;
                             }
                             else if (dr1 > dr2 && dg1 == dg2 && db1 < db2)
@@ -833,7 +833,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                                 if (dg1 == 255)
@@ -843,7 +843,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                             }
@@ -854,7 +854,7 @@ namespace WindowsFormsApplication2
                                 db1 += db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                 i++;
                             }
                             else if (dr1 == dr2 && dg1 > dg2 && db1 == db2)
@@ -864,7 +864,7 @@ namespace WindowsFormsApplication2
                                 db1 = db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                 i++;
                             }
                             else if (dr1 == dr2 && dg1 == dg2 && db1 > db2)
@@ -874,7 +874,7 @@ namespace WindowsFormsApplication2
                                 db1 -= db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                 i++;
                             }
                             else if (dr1 > dr2 && dg1 < dg2 && db1 < db2)
@@ -884,7 +884,7 @@ namespace WindowsFormsApplication2
                                 db1 += db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                 i++;
                             }
                             else if (dr1 < dr2 && dg1 > dg2 && db1 > db2)
@@ -894,7 +894,7 @@ namespace WindowsFormsApplication2
                                 db1 -= db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                 i++;
                             }
                             else if (dr1 > dr2 && dg1 > dg2 && db1 < db2)
@@ -904,7 +904,7 @@ namespace WindowsFormsApplication2
                                 db1 += db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                 i++;
                             }
                             else if (dr1 > dr2 && dg1 < dg2 && db1 > db2)
@@ -914,7 +914,7 @@ namespace WindowsFormsApplication2
                                 db1 -= db;
                                 myColor = Color.FromArgb(dr1, dg1, db1);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                 i++;
                             }
                             else if (dr1 == dr2 && dg1 == dg2 && db1 == db2)
@@ -926,14 +926,14 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                                 if (dr1 == 255 && dg1 == 255 && db1 == 255)
                                 {
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                             }
@@ -946,7 +946,7 @@ namespace WindowsFormsApplication2
                                     db1 = db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                                 if (db1 == 255)
@@ -956,7 +956,7 @@ namespace WindowsFormsApplication2
                                     db1 -= db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                             }
@@ -969,7 +969,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                                 if (dg1 == 255)
@@ -978,7 +978,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                             }
@@ -991,7 +991,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                                 if (dr1 == 255)
@@ -1000,7 +1000,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                             }
@@ -1013,7 +1013,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                                 if (dg1 == 255 && db1 == 255)
@@ -1021,7 +1021,7 @@ namespace WindowsFormsApplication2
                                     dr1 += dr;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                             }
@@ -1034,7 +1034,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                                 if (dr1 == 255 && dg1 == 255)
@@ -1042,7 +1042,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                             }
@@ -1055,7 +1055,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                                 if (dr1 == 255 && db1 == 255)
@@ -1063,7 +1063,7 @@ namespace WindowsFormsApplication2
                                     dg1 += dg;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                             }
@@ -1074,7 +1074,7 @@ namespace WindowsFormsApplication2
                                 db2 += db;
                                 myColor = Color.FromArgb(dr2, dg2, db2);
                                 hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                 i++;
                             }
                             else if (dr1 < dr2 && dg1 > dg2 && db1 == db2)
@@ -1086,7 +1086,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                                 if (db1 == 255)
@@ -1095,7 +1095,7 @@ namespace WindowsFormsApplication2
                                     dg1 -= dg;
                                     myColor = Color.FromArgb(dr1, dg2, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                             }
@@ -1108,7 +1108,7 @@ namespace WindowsFormsApplication2
                                     db1 += db;
                                     myColor = Color.FromArgb(dr1, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                                 if (db1 == 255)
@@ -1117,7 +1117,7 @@ namespace WindowsFormsApplication2
                                     dg1 += dg;
                                     myColor = Color.FromArgb(dr2, dg1, db1);
                                     hex = myColor.R.ToString("X2") + myColor.G.ToString("X2") + myColor.B.ToString("X2");
-                                    outp.Text = ($"{outp.Text}[COLOR = #{hex}]{kelime[i]+"[/COLOR]"}");
+                                    outp.Text = ($"{outp.Text}[COLOR=#{hex}]{kelime[i]+"[/COLOR]"}");
                                     i++;
                                 }
                             }
