@@ -396,22 +396,20 @@ namespace WindowsFormsApplication2
         private void xmlctrl()
         {
             string dosya_dizini = AppDomain.CurrentDomain.BaseDirectory.ToString() + "SavedColorCodes.xml";
-            if (File.Exists(dosya_dizini) == true) // dizindeki dosya var mı ?
+            if (File.Exists(dosya_dizini) == true)
             {
             }
             else
             {
-                // verdiğimiz xml dosya yolunda xml dosya oluşturuluyor.
+                
                 FileStream fs = new FileStream(dosya_dizini, FileMode.OpenOrCreate);
 
-                // temel bir xml dosyası hazırlıyoruz.
                 string YazilacakIcerik = "<?xml version=\"1.0\" encoding=\"utf-8\" ?> "
                     + Environment.NewLine + "<clrs> "
                     + Environment.NewLine + "</clrs>";
                 fs.Flush();
                 fs.Close();
 
-                // oluşturulan xml dosyasının okunabilmesi için gerekli olan şeyleri içerisine yazdık.
                 File.AppendAllText(dosya_dizini, YazilacakIcerik);
             }
         }
@@ -614,7 +612,6 @@ namespace WindowsFormsApplication2
             }
         }
 
-        // PictureBox: This grabs the pixel color and sends that data to the text labels
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -638,7 +635,6 @@ namespace WindowsFormsApplication2
             }
         }
 
-        // ColorWheel: This grabs the pixel color and sends that data to the text labels
         private void colorbox_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -852,7 +848,7 @@ namespace WindowsFormsApplication2
                             green1 = tbG.Text;
                             blue1 = tbB.Text;
                             clr2 = tbR.Text + "," + tbG.Text + "," + tbB.Text + "-";
-                            cder.Text = cder.Text + clr2; //!
+                            cder.Text = cder.Text + clr2;
                             tbh1 = tbHex.Text;
                             break;
                         case 2:
