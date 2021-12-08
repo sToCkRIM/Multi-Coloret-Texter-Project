@@ -57,9 +57,13 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.opaci = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.colorwheel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selector)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorbox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.opaci)).BeginInit();
             this.SuspendLayout();
             // 
             // colorwheel
@@ -326,12 +330,43 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(310, 226);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(117, 13);
+            this.label5.TabIndex = 35;
+            this.label5.Text = "Set Transparency Here";
+            // 
+            // splitter1
+            // 
+            this.splitter1.Location = new System.Drawing.Point(0, 0);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(3, 299);
+            this.splitter1.TabIndex = 37;
+            this.splitter1.TabStop = false;
+            // 
+            // opaci
+            // 
+            this.opaci.Location = new System.Drawing.Point(241, 242);
+            this.opaci.Maximum = 50;
+            this.opaci.Minimum = 1;
+            this.opaci.Name = "opaci";
+            this.opaci.Size = new System.Drawing.Size(263, 45);
+            this.opaci.TabIndex = 40;
+            this.opaci.Value = 50;
+            this.opaci.Scroll += new System.EventHandler(this.opaci_Scroll);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(835, 299);
+            this.Controls.Add(this.opaci);
+            this.Controls.Add(this.splitter1);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -367,11 +402,12 @@
             this.Text = "Colored Texter Project";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            //this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             ((System.ComponentModel.ISupportInitialize)(this.colorwheel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.selector)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorbox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.opaci)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -408,6 +444,9 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.TrackBar opaci;
     }
 }
 
