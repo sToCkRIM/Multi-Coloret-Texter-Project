@@ -144,241 +144,293 @@ namespace WindowsFormsApplication2
                     case 5:
                         {
                             this.Opacity = 0.1;
+                             
                             break;
                         }
                     case 6:
                         {
                             this.Opacity = 0.12;
+                             
                             break;
                         }
                     case 7:
                         {
                             this.Opacity = 0.14;
+                             
                             break;
                         }
                     case 8:
                         {
                             this.Opacity = 0.16;
+                             
                             break;
                         }
                     case 9:
                         {
                             this.Opacity = 0.18;
+                             
                             break;
                         }
                     case 10:
                         {
                             this.Opacity = 0.2;
+                             
                             break;
                         }
                     case 11:
                         {
                             this.Opacity = 0.22;
+                             
                             break;
                         }
                     case 12:
                         {
                             this.Opacity = 0.24;
+                             
                             break;
                         }
                     case 13:
                         {
                             this.Opacity = 0.26;
+                             
                             break;
                         }
                     case 14:
                         {
                             this.Opacity = 0.28;
+                             
                             break;
                         }
                     case 15:
                         {
                             this.Opacity = 0.3;
+                             
                             break;
                         }
                     case 16:
                         {
                             this.Opacity = 0.32;
+                             
                             break;
                         }
                     case 17:
                         {
                             this.Opacity = 0.34;
+                             
                             break;
                         }
                     case 18:
                         {
                             this.Opacity = 0.36;
+                             
                             break;
                         }
                     case 19:
                         {
                             this.Opacity = 0.38;
+                             
                             break;
                         }
                     case 20:
                         {
                             this.Opacity = 0.4;
+                             
                             break;
                         }
                     case 21:
                         {
                             this.Opacity = 0.42;
+                             
                             break;
                         }
                     case 22:
                         {
                             this.Opacity = 0.44;
+                             
                             break;
                         }
                     case 23:
                         {
                             this.Opacity = 0.46;
+                             
                             break;
                         }
                     case 24:
                         {
                             this.Opacity = 0.48;
+                             
                             break;
                         }
                     case 25:
                         {
                             this.Opacity = 0.5;
+                             
                             break;
                         }
                     case 26:
                         {
                             this.Opacity = 0.52;
+                             
                             break;
                         }
                     case 27:
                         {
                             this.Opacity = 0.54;
+                             
                             break;
                         }
                     case 28:
                         {
                             this.Opacity = 0.56;
+                             
                             break;
                         }
                     case 29:
                         {
                             this.Opacity = 0.58;
+                             
                             break;
                         }
                     case 30:
                         {
                             this.Opacity = 0.6;
+                             
                             break;
                         }
                     case 31:
                         {
                             this.Opacity = 0.62;
+                             
                             break;
                         }
                     case 32:
                         {
                             this.Opacity = 0.64;
+                             
                             break;
                         }
                     case 33:
                         {
                             this.Opacity = 0.66;
+                             
                             break;
                         }
                     case 34:
                         {
                             this.Opacity = 0.68;
+                             
                             break;
                         }
                     case 35:
                         {
                             this.Opacity = 0.7;
+                             
                             break;
                         }
                     case 36:
                         {
                             this.Opacity = 0.72;
+                             
                             break;
                         }
                     case 37:
                         {
                             this.Opacity = 0.74;
+                             
                             break;
                         }
                     case 38:
                         {
                             this.Opacity = 0.76;
+                             
                             break;
                         }
                     case 39:
                         {
                             this.Opacity = 0.78;
+                             
                             break;
                         }
                     case 40:
                         {
                             this.Opacity = 0.8;
+                             
                             break;
                         }
                     case 41:
                         {
                             this.Opacity = 0.82;
+                             
                             break;
                         }
                     case 42:
                         {
                             this.Opacity = 0.84;
+                             
                             break;
                         }
                     case 43:
                         {
                             this.Opacity = 0.86;
+                             
                             break;
                         }
                     case 44:
                         {
                             this.Opacity = 0.88;
+                             
                             break;
                         }
                     case 45:
                         {
                             this.Opacity = 0.9;
+                             
                             break;
                         }
                     case 46:
                         {
                             this.Opacity = 0.92;
+                             
                             break;
                         }
                     case 47:
                         {
                             this.Opacity = 0.94;
+                             
                             break;
                         }
                     case 48:
                         {
                             this.Opacity = 0.96;
+                             
                             break;
                         }
                     case 49:
                         {
                             this.Opacity = 0.98;
+                             
                             break;
                         }
                     case 50:
                         {
                             this.Opacity = 1;
+                             
                             break;
                         }
                     default:
                         {
                             this.Opacity = 1;
+                             
                             break;
                         }
                 }
             }
             else { }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void opaci_Scroll(object sender, EventArgs e)
@@ -471,7 +523,7 @@ namespace WindowsFormsApplication2
         private void load()
         {
             cder.Items.Clear();
-            XDocument xDoc = XDocument.Load(@"SavedColorCodes.xml");
+            XDocument xDoc = XDocument.Load(@"DataBase.xml");
             XElement rootElement = xDoc.Root;
             int cint = cder.Items.Count;
             foreach (XElement rehberimiz in rootElement.Elements())
@@ -527,7 +579,7 @@ namespace WindowsFormsApplication2
 
         private void refre_Click(object sender, EventArgs e)
         {
-            colorwheel.Enabled = false;
+            colorwheel.Enabled = true;
             button1.Enabled = true;
             coder = false;
             ranger = 0;
